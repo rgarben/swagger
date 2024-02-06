@@ -13,54 +13,54 @@ app.use(bodyParser.json());
 
 // Ruta principal
 app.get('/', (req, res) => {
-  res.send('Bienvenido a la Pokédex API');
+  res.send('Bienvenidos a la lista de tareas API');
 });
 
 // Ruta para la documentación Swagger UI
 const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Datos simulados para la Pokédex (solo para fines de ejemplo)
-let pokemonData = [
-  { id: 1, name: 'Bulbasaur', type: 'Grass' },
-  { id: 2, name: 'Charmander', type: 'Fire' }
+// Datos simulados para las Tareas (solo para fines de ejemplo)
+let tareaData = [
+  { id: 1, name: 'Arreglar pc', type: 'Informatica' },
+  { id: 2, name: 'Limpiar mesa', type: 'Limpieza' }
 ];
 
-// Ruta para obtener todos los Pokémon
-app.get('/pokemon', (req, res) => {
-  res.json(pokemonData);
+// Ruta para obtener todas las Tareas
+app.get('/tareas', (req, res) => {
+  res.json(tareaData);
 });
 
-// Ruta para agregar un nuevo Pokémon
-app.post('/pokemon', (req, res) => {
+// Ruta para agregar una nueva Tarea
+app.post('/tareas', (req, res) => {
   const { name, type } = req.body;
-  const newPokemon = { id: pokemonData.length + 1, name, type };
-  pokemonData.push(newPokemon);
-  res.status(201).json({ message: 'Pokémon agregado exitosamente', pokemon: newPokemon });
+  const newTarea = { id: tareaData.length + 1, name, type };
+  tareaData.push(newTarea);
+  res.status(201).json({ message: 'Tarea agregada exitosamente', tarea: newTarea });
 });
 
-// Ruta para editar un Pokémon
-app.put('/pokemon/:id', (req, res) => {
+// Ruta para editar una tarea
+app.put('/tareas/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const { name, type } = req.body;
-  const index = pokemonData.findIndex(pokemon => pokemon.id === id);
+  const index = tareaData.findIndex(tarea => tarea.id === id);
   if (index !== -1) {
-    pokemonData[index] = { ...pokemonData[index], name, type };
-    res.json({ message: 'Pokémon actualizado exitosamente', pokemon: pokemonData[index] });
+    tareaData[index] = { ...tareaData[index], name, type };
+    res.json({ message: 'Tarea actualizada exitosamente', tarea: tareaData[index] });
   } else {
-    res.status(404).json({ message: 'Pokémon no encontrado' });
+    res.status(404).json({ message: 'Tarea no encontrada' });
   }
 });
 
-// Ruta para borrar un Pokémon
-app.delete('/pokemon/:id', (req, res) => {
+// Ruta para borrar una tarea
+app.delete('/tareas/:id', (req, res) => {
   const id = parseInt(req.params.id);
-  const index = pokemonData.findIndex(pokemon => pokemon.id === id);
+  const index = tareaData.findIndex(tarea => tarea.id === id);
   if (index !== -1) {
-    const deletedPokemon = pokemonData.splice(index, 1)[0];
-    res.json({ message: 'Pokémon eliminado exitosamente', pokemon: deletedPokemon });
+    const deletedTarea = tareaData.splice(index, 1)[0];
+    res.json({ message: 'Tarea eliminada exitosamente', tarea: deletedTarea });
   } else {
-    res.status(404).json({ message: 'Pokémon no encontrado' });
+    res.status(404).json({ message: 'Tarea na encontrada' });
   }
 });
 

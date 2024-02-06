@@ -5,81 +5,81 @@ info:
 tags:
   - name: Tareas
 paths:
-  /pokemon:
+  /tareas:
     get:
       tags:
           - Tareas
-      summary: Obtiene todos los Pokémon
+      summary: Obtiene todos las Tareas
       responses:
         '200':
-          description: Lista de todos los Pokémon en la Pokédex
+          description: Lista de todas las Tareas
           content:
             application/json:
               example:
                 - id: 1
-                  name: Bulbasaur
-                  type: Grass
+                  name: Arreglar pc
+                  type: Informatica
                 - id: 2
-                  name: Charmander
-                  type: Fire
+                  name: Limpiar mesa
+                  type: Limpieza
     post:
       tags:
         - Tareas  
-      summary: Agrega un nuevo Pokémon a la Pokédex
+      summary: Agrega una nueva tarea
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PokemonInput'
+              $ref: '#/components/schemas/TareaInput'
       responses:
         '201':
-          description: Pokémon agregado exitosamente a la Pokédex
-  /pokemon/{id}:
+          description: Tarea agregada exitosamente a la lista
+  /tareas/{id}:
     put:
       tags:
         - Tareas  
-      summary: Actualiza un Pokémon existente en la Pokédex
+      summary: Actualiza una tarea existente en la lista
       parameters:
         - in: path
           name: id
           required: true
-          description: ID del Pokémon a actualizar
+          description: ID de la tarea a actualizar
           schema:
             type: integer
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PokemonInput'
+              $ref: '#/components/schemas/TareaInput'
       responses:
         '200':
-          description: Pokémon actualizado exitosamente
+          description: Tarea actualizada exitosamente
         '404':
-          description: Pokémon no encontrado
+          description: Tarea no encontrada
     delete:
       tags:
         - Tareas  
-      summary: Elimina un Pokémon de la Pokédex
+      summary: Elimina una tarea de la lista
       parameters:
         - in: path
           name: id
           required: true
-          description: ID del Pokémon a eliminar
+          description: ID de la tarea a eliminar
           schema:
             type: integer
       responses:
         '200':
-          description: Pokémon eliminado exitosamente
+          description: Tarea eliminada exitosamente
         '404':
-          description: Pokémon no encontrado
+          description: Tarea no encontrada
 components:
   schemas:
-    PokemonInput:
+    TareaInput:
       type: object
       properties:
         name:
           type: string
-          description: Nombre del Pokémon
+          description: Nombre de la tarea
         type:
           type: string
-          description: Tipo del Pokémon
+          description: Tipo de la tarea
