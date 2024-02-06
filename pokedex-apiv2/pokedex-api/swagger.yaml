@@ -1,0 +1,85 @@
+openapi: 3.0.0
+info:
+  title: Pokédex API
+  version: 1.0.0
+tags:
+  - name: Pokemons
+paths:
+  /pokemon:
+    get:
+      tags:
+          - Pokemons
+      summary: Obtiene todos los Pokémon
+      responses:
+        '200':
+          description: Lista de todos los Pokémon en la Pokédex
+          content:
+            application/json:
+              example:
+                - id: 1
+                  name: Bulbasaur
+                  type: Grass
+                - id: 2
+                  name: Charmander
+                  type: Fire
+    post:
+      tags:
+        - Pokemons  
+      summary: Agrega un nuevo Pokémon a la Pokédex
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PokemonInput'
+      responses:
+        '201':
+          description: Pokémon agregado exitosamente a la Pokédex
+  /pokemon/{id}:
+    put:
+      tags:
+        - Pokemons  
+      summary: Actualiza un Pokémon existente en la Pokédex
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del Pokémon a actualizar
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PokemonInput'
+      responses:
+        '200':
+          description: Pokémon actualizado exitosamente
+        '404':
+          description: Pokémon no encontrado
+    delete:
+      tags:
+        - Pokemons  
+      summary: Elimina un Pokémon de la Pokédex
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID del Pokémon a eliminar
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Pokémon eliminado exitosamente
+        '404':
+          description: Pokémon no encontrado
+components:
+  schemas:
+    PokemonInput:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del Pokémon
+        type:
+          type: string
+          description: Tipo del Pokémon
